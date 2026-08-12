@@ -417,4 +417,189 @@ body {
 }
 
 .reset-btn {
-  margin
+  margin-top: 25px;
+  background: transparent;
+  border: none;
+  color: #8c98aa;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+/* =========================
+   HOW IT WORKS
+========================= */
+
+.how-section {
+  background: #0b101b;
+}
+
+.steps {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.step {
+  padding: 30px;
+  background: #101722;
+  border: 1px solid #202a3a;
+  border-radius: 15px;
+}
+
+.step-number {
+  color: #39ff88;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+
+.step h3 {
+  font-size: 21px;
+  margin-bottom: 10px;
+}
+
+.step p {
+  color: #8994a7;
+}
+
+
+/* =========================
+   FINAL CTA
+========================= */
+
+.final-cta {
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(57,255,136,0.12), transparent 45%),
+    #070b14;
+}
+
+.cta-content {
+  max-width: 800px;
+  margin: auto;
+}
+
+.final-cta h2 {
+  font-size: clamp(35px, 5vw, 58px);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.final-cta p {
+  color: #929daf;
+  margin-bottom: 30px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  padding: 45px 7%;
+  text-align: center;
+  border-top: 1px solid #202a38;
+  background: #050810;
+}
+
+footer p {
+  color: #697487;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 16px 5%;
+  }
+
+  .nav-btn {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+
+  .hero {
+    min-height: 80vh;
+    padding: 70px 20px;
+  }
+
+  .hero h1 {
+    letter-spacing: -2px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .problem,
+  .scanner-section,
+  .how-section,
+  .final-cta {
+    padding: 70px 5%;
+  }
+
+  .problem-grid,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .scanner-card {
+    padding: 25px 18px;
+  }
+
+  #scannerForm {
+    grid-template-columns: 1fr;
+  }
+
+  .scan-btn {
+    grid-column: auto;
+  }
+
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    margin-bottom: 35px;
+  }
+}
+
+
+@media (max-width: 480px) {
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .nav-btn {
+    font-size: 12px;
+    padding: 8px 11px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+  }
+
+  .revenue-number {
+    font-size: 55px;
+  }
+  }
