@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Revenue Leak Scanner AI</title>
+  <title>Revenue Leak Scanner AI | Recover Lost Revenue</title>
 
-  <meta name="description"
-    content="AI-powered Revenue Leak Scanner that helps businesses identify lost revenue opportunities and improve lead follow-up.">
+  <meta
+    name="description"
+    content="AI-powered Revenue Leak Scanner that helps businesses identify missed leads, follow-up gaps and potential revenue opportunities."
+  >
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- Header -->
+  <!-- =========================
+       NAVBAR
+  ========================== -->
+
   <header class="navbar">
+
     <div class="logo">
       ⚡ Revenue<span>Leak</span>
     </div>
@@ -23,11 +29,16 @@
     <a href="#scanner" class="nav-btn">
       Scan My Business
     </a>
+
   </header>
 
 
-  <!-- Hero -->
+  <!-- =========================
+       HERO
+  ========================== -->
+
   <section class="hero">
+
     <div class="hero-content">
 
       <div class="badge">
@@ -45,6 +56,7 @@
       </p>
 
       <div class="hero-buttons">
+
         <a href="#scanner" class="primary-btn">
           Run Free Revenue Scan →
         </a>
@@ -52,6 +64,7 @@
         <a href="#how-it-works" class="secondary-btn">
           See How It Works
         </a>
+
       </div>
 
       <div class="trust">
@@ -59,48 +72,83 @@
       </div>
 
     </div>
+
   </section>
 
 
-  <!-- Problem -->
+  <!-- =========================
+       PROBLEM
+  ========================== -->
+
   <section class="problem">
 
     <div class="section-title">
-      <div class="small-label">THE HIDDEN PROBLEM</div>
+
+      <div class="small-label">
+        THE HIDDEN PROBLEM
+      </div>
 
       <h2>
         Your biggest revenue leak
         may already be inside your lead list.
       </h2>
+
     </div>
+
 
     <div class="problem-grid">
 
       <div class="problem-card">
-        <div class="icon">📞</div>
-        <h3>Missed Calls</h3>
+
+        <div class="icon">
+          📞
+        </div>
+
+        <h3>
+          Missed Calls
+        </h3>
+
         <p>
           Potential customers call but don't receive
           a fast response.
         </p>
+
       </div>
 
+
       <div class="problem-card">
-        <div class="icon">⏰</div>
-        <h3>Slow Response</h3>
+
+        <div class="icon">
+          ⏰
+        </div>
+
+        <h3>
+          Slow Response
+        </h3>
+
         <p>
           Leads lose interest while your team
           takes too long to respond.
         </p>
+
       </div>
 
+
       <div class="problem-card">
-        <div class="icon">🔁</div>
-        <h3>Missed Follow-ups</h3>
+
+        <div class="icon">
+          🔁
+        </div>
+
+        <h3>
+          Missed Follow-ups
+        </h3>
+
         <p>
           Valuable prospects disappear because
           follow-ups are inconsistent.
         </p>
+
       </div>
 
     </div>
@@ -108,8 +156,14 @@
   </section>
 
 
-  <!-- Scanner -->
-  <section class="scanner-section" id="scanner">
+  <!-- =========================
+       SCANNER
+  ========================== -->
+
+  <section
+    class="scanner-section"
+    id="scanner"
+  >
 
     <div class="section-title">
 
@@ -133,7 +187,11 @@
 
       <form id="scannerForm">
 
+
+        <!-- Monthly Leads -->
+
         <div class="input-group">
+
           <label for="leads">
             Monthly Leads
           </label>
@@ -145,10 +203,14 @@
             min="1"
             required
           >
+
         </div>
 
 
+        <!-- Response Rate -->
+
         <div class="input-group">
+
           <label for="response">
             Average Response Rate (%)
           </label>
@@ -161,10 +223,14 @@
             max="100"
             required
           >
+
         </div>
 
 
+        <!-- Conversion Rate -->
+
         <div class="input-group">
+
           <label for="conversion">
             Current Conversion Rate (%)
           </label>
@@ -177,10 +243,14 @@
             max="100"
             required
           >
+
         </div>
 
 
+        <!-- Deal Value -->
+
         <div class="input-group">
+
           <label for="dealValue">
             Average Deal Value ($)
           </label>
@@ -192,8 +262,11 @@
             min="1"
             required
           >
+
         </div>
 
+
+        <!-- Scan Button -->
 
         <button
           type="submit"
@@ -206,7 +279,10 @@
       </form>
 
 
-      <!-- Results -->
+      <!-- =========================
+           RESULTS
+      ========================== -->
+
       <div
         id="results"
         class="results"
@@ -214,6 +290,7 @@
       >
 
         <div class="result-header">
+
           <div class="small-label">
             SCAN COMPLETE
           </div>
@@ -221,41 +298,80 @@
           <h2>
             Your Estimated Revenue Leak
           </h2>
+
         </div>
 
 
+        <!-- Revenue -->
+
         <div class="revenue-number">
-          $<span id="lostRevenue">0</span>
+
+          $<span id="lostRevenue">
+            0
+          </span>
+
         </div>
 
 
         <p class="result-description">
+
           Estimated monthly revenue opportunity based
           on your current lead response and conversion performance.
+
         </p>
 
 
+        <!-- Metrics -->
+
         <div class="metrics">
 
-          <div class="metric">
-            <strong id="missedLeads">0</strong>
-            <span>Missed Leads</span>
-          </div>
 
           <div class="metric">
-            <strong id="potentialDeals">0</strong>
-            <span>Potential Deals</span>
+
+            <strong id="missedLeads">
+              0
+            </strong>
+
+            <span>
+              Missed Leads
+            </span>
+
           </div>
 
+
           <div class="metric">
-            <strong id="currentDeals">0</strong>
-            <span>Current Deals</span>
+
+            <strong id="potentialDeals">
+              0
+            </strong>
+
+            <span>
+              Potential Deals
+            </span>
+
           </div>
+
+
+          <div class="metric">
+
+            <strong id="currentDeals">
+              0
+            </strong>
+
+            <span>
+              Current Deals
+            </span>
+
+          </div>
+
 
         </div>
 
 
-        <!-- Recovery Plan -->
+        <!-- =========================
+             AI RECOVERY
+        ========================== -->
+
         <div class="recovery-box">
 
           <h3>
@@ -277,7 +393,8 @@
         </div>
 
 
-        <!-- Recovery Plan Output -->
+        <!-- Recovery Plan -->
+
         <div
           id="recoveryPlan"
           class="recovery-plan"
@@ -292,6 +409,57 @@
 
         </div>
 
+
+        <!-- =========================
+             CLIENT CTA
+        ========================== -->
+
+        <div class="audit-cta">
+
+          <div class="small-label">
+            READY TO RECOVER MORE?
+          </div>
+
+          <h3>
+            Turn Your Lost Leads Into Revenue.
+          </h3>
+
+          <p>
+            Get a personalized Revenue Recovery Audit
+            and discover exactly where your business
+            is losing opportunities.
+          </p>
+
+
+          <div class="audit-buttons">
+
+            <!-- Replace email with your business email -->
+
+            <a
+              href="mailto:your@email.com?subject=Revenue%20Recovery%20Audit"
+              class="primary-btn"
+            >
+              📩 Book Revenue Audit
+            </a>
+
+
+            <!-- Replace WhatsApp number with your number -->
+
+            <a
+              href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%20just%20ran%20the%20Revenue%20Leak%20Scanner%20and%20I%27d%20like%20a%20Revenue%20Recovery%20Audit."
+              class="secondary-btn"
+              target="_blank"
+              rel="noopener"
+            >
+              💬 WhatsApp Audit
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- Reset -->
 
         <button
           type="button"
@@ -308,7 +476,10 @@
   </section>
 
 
-  <!-- How It Works -->
+  <!-- =========================
+       HOW IT WORKS
+  ========================== -->
+
   <section
     class="how-section"
     id="how-it-works"
@@ -329,8 +500,12 @@
 
     <div class="steps">
 
+
       <div class="step">
-        <div class="step-number">01</div>
+
+        <div class="step-number">
+          01
+        </div>
 
         <h3>
           Enter Your Numbers
@@ -340,11 +515,15 @@
           Add your monthly leads, response rate,
           conversion rate and average deal value.
         </p>
+
       </div>
 
 
       <div class="step">
-        <div class="step-number">02</div>
+
+        <div class="step-number">
+          02
+        </div>
 
         <h3>
           Find Your Leak
@@ -354,11 +533,15 @@
           The scanner estimates the revenue
           opportunity hidden inside your lead flow.
         </p>
+
       </div>
 
 
       <div class="step">
-        <div class="step-number">03</div>
+
+        <div class="step-number">
+          03
+        </div>
 
         <h3>
           Recover Revenue
@@ -368,14 +551,19 @@
           Generate a practical recovery plan
           focused on response and follow-up.
         </p>
+
       </div>
+
 
     </div>
 
   </section>
 
 
-  <!-- CTA -->
+  <!-- =========================
+       FINAL CTA
+  ========================== -->
+
   <section class="final-cta">
 
     <div class="cta-content">
@@ -406,7 +594,58 @@
   </section>
 
 
-  <!-- Footer -->
+  <!-- =========================
+       CONTACT / CLIENT CTA
+  ========================== -->
+
+  <section class="contact-section">
+
+    <div class="section-title">
+
+      <div class="small-label">
+        WORK WITH US
+      </div>
+
+      <h2>
+        Ready To Recover Lost Revenue?
+      </h2>
+
+      <p>
+        Let us analyze your lead flow and build
+        a practical recovery strategy for your business.
+      </p>
+
+    </div>
+
+
+    <div class="contact-buttons">
+
+      <a
+        href="mailto:your@email.com?subject=Revenue%20Recovery%20Audit"
+        class="primary-btn"
+      >
+        📩 Contact Us
+      </a>
+
+
+      <a
+        href="https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27m%20interested%20in%20a%20Revenue%20Recovery%20Audit."
+        class="secondary-btn"
+        target="_blank"
+        rel="noopener"
+      >
+        💬 WhatsApp
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
+
   <footer>
 
     <div class="logo">
@@ -424,8 +663,12 @@
   </footer>
 
 
-  <!-- JavaScript -->
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
   <script src="script.js"></script>
 
 </body>
- </html>
+
+           </html>
