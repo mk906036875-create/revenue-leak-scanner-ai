@@ -1,0 +1,189 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #070b12;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  width: 100%;
+  padding: 20px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1d2633;
+  background: rgba(7, 11, 18, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: #4da3ff;
+}
+
+.nav-btn {
+  text-decoration: none;
+  color: #ffffff;
+  background: #1267d6;
+  padding: 11px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  background: #2585ff;
+  transform: translateY(-2px);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 7%;
+  background:
+    radial-gradient(circle at 50% 20%, #12325a 0%, transparent 35%),
+    linear-gradient(180deg, #080d16 0%, #070b12 100%);
+}
+
+.hero-content {
+  max-width: 900px;
+}
+
+.badge,
+.small-label {
+  color: #4da3ff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 7vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -3px;
+  margin-bottom: 25px;
+}
+
+.hero h1 span {
+  display: block;
+  color: #4da3ff;
+}
+
+.hero p {
+  max-width: 680px;
+  margin: auto;
+  color: #aeb8c7;
+  font-size: 19px;
+}
+
+.hero-buttons {
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 15px 24px;
+  border-radius: 9px;
+  font-weight: 800;
+  transition: 0.3s;
+}
+
+.primary-btn {
+  color: #ffffff;
+  background: #1267d6;
+  box-shadow: 0 10px 30px rgba(18, 103, 214, 0.25);
+}
+
+.primary-btn:hover {
+  background: #2585ff;
+  transform: translateY(-3px);
+}
+
+.secondary-btn {
+  color: #ffffff;
+  border: 1px solid #334154;
+  background: #101722;
+}
+
+.secondary-btn:hover {
+  background: #182231;
+}
+
+.trust {
+  margin-top: 25px;
+  color: #6f7c8f;
+  font-size: 13px;
+}
+
+
+/* =========================
+   PROBLEM SECTION
+========================= */
+
+.problem {
+  padding: 100px 7%;
+  background: #0b111b;
+}
+
+.section-title {
+  max-width: 800px;
+  margin: 0 auto 55px;
+  text-align: center;
+}
+
+.section-title h2 {
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+}
+
+.problem-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.problem-card {
+  padding: 30px;
+  background: #101722;
+  border: 1px solid #202c3b;
+  border
