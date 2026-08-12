@@ -1,501 +1,338 @@
- const scannerForm = document.getElementById("scannerForm");
-const result = document.getElementById("result");
+document.addEventListener("DOMContentLoaded", function () {
 
-let businessData = null;
+  const scannerForm = document.getElementById("scannerForm");
 
-scannerForm.addEventListener("submit", function (event) {
-  event.preventDefault();
+  const results = document.getElementById("results");
 
-  const leads = Number(document.getElementById("leads").value);
-  const dealValue = Number(document.getElementById("dealValue").value);
-  const responseTime = Number(
-    document.getElementById("responseTime").value
-  );
-  const followUpRate = Number(
-    document.getElementById("followUpRate").value
-  );
+  const lostRevenue = document.getElementById("lostRevenue");
+  const missedLeads = document.getElementById("missedLeads");
+  const potentialDeals = document.getElementById("potentialDeals");
+  const currentDeals = document.getElementById("currentDeals");
 
-  if (
-    leads <= 0 ||
-    dealValue <= 0 ||
-    responseTime < 0 ||
-    followUpRate < 0 ||
-    followUpRate > 100
-  ) {
-    alert("Please enter valid business numbers.");
-    return;
+  const recoveryBtn = document.getElementById("recoveryBtn");
+  const recoveryPlan = document.getElementById("recoveryPlan");
+  const planContent = document.getElementById("planContent");
+
+  const resetBtn = document.getElementById("resetBtn");
+
+  const recoveryText = document.getElementById("recoveryText");
+
+
+  /* =========================
+     FORMAT MONEY
+  ========================= */
+
+  function formatMoney(number) {
+    return Math.round(number).toLocaleString("en-US");
   }
 
-  // ==============================
-  // REVENUE RISK CALCULATION
-  // ==============================
-
-  let responseRisk = 0;
-
-  if (responseTime <= 1) {
-    responseRisk = 5;
-  } else if (responseTime <= 3) {
-    responseRisk = 12;
-  } else if (responseTime <= 6) {
-    responseRisk = 22;
-  } else if (responseTime <= 12) {
-    responseRisk = 30;
-  } else {
-    responseRisk = 38;
-  }
-
-  const followUpRisk = Math.max(
-    0,
-    35 - followUpRate * 0.35
-  );
-
-  let leadRisk = 5;
-
-  if (leads >= 1000) {
-    leadRisk = 15;
-  } else if (leads >= 500) {
-    leadRisk = 12;
-  } else if (leads >= 200) {
-    leadRisk = 8;
-  }
-
-  let riskScore = Math.round(
-    responseRisk + followUpRisk + leadRisk
-  );
-
-  riskScore = Math.min(100, Math.max(1, riskScore));
-
-  let riskLevel = "LOW";
-
-  if (riskScore >= 70) {
-    riskLevel = "HIGH";
-  } else if (riskScore >= 40) {
-    riskLevel = "MEDIUM";
-  }
-
-  // ==============================
-  // OPPORTUNITY ESTIMATION
-  // ==============================
-
-  const missedFollowUps = Math.round(
-    leads * ((100 - followUpRate) / 100)
-  );
-
-  const estimatedRecoveredLeads = Math.max(
-    1,
-    Math.round(missedFollowUps * 0.25)
-  );
-
-  const estimatedLeakage =
-    estimatedRecoveredLeads * dealValue;
-
-  const lowEstimate = Math.round(
-    estimatedLeakage * 0.7
-  );
-
-  const highEstimate = Math.round(
-    estimatedLeakage * 1.3
-  );
-
-  const recoveryLow = Math.round(
-    lowEstimate * 0.25
-  );
-
-  const recoveryHigh = Math.round(
-    highEstimate * 0.4
-  );
-
-  const formatCurrency = (amount) => {
-    return "$" + amount.toLocaleString("en-US");
-  };
-
-  // ==============================
-  // REVENUE LEAKS
-  // ==============================
-
-  const leaks = [];
-
-  if (responseTime > 3) {
-    leaks.push(
-      "⚡ Slow lead response may be causing high-intent prospects to cool down."
-    );
-  }
-
-  if (followUpRate < 80) {
-    leaks.push(
-      "🔁 Missed follow-ups are leaving potential opportunities unattended."
-    );
-  }
-
-  if (missedFollowUps > 0) {
-    leaks.push(
-      `📉 Approximately ${missedFollowUps.toLocaleString(
-        "en-US"
-      )} leads may need additional follow-up.`
-    );
-  }
-
-  if (leads >= 500) {
-    leaks.push(
-      "📊 High lead volume increases the risk of manual follow-up gaps."
-    );
-  }
-
-  while (leaks.length < 3) {
-    leaks.push(
-      "🎯 Your sales process may have opportunities for additional automation."
-    );
-  }
-
-  // ==============================
-  // AI RECOMMENDATION
-  // ==============================
-
-  let recommendation =
-    "Recover existing opportunities before increasing advertising spend.";
-
-  if (responseTime > 6) {
-    recommendation =
-      "Prioritize faster lead response and trigger an immediate follow-up workflow for new inquiries.";
-  } else if (followUpRate < 60) {
-    recommendation =
-      "Build a structured multi-step follow-up sequence so older leads do not disappear from your pipeline.";
-  } else if (followUpRate < 80) {
-    recommendation =
-      "Automate follow-up reminders and prioritize leads with the highest potential deal value.";
-  } else {
-    recommendation =
-      "Your follow-up process looks relatively healthy. Focus on high-value leads and response-time optimization.";
-  }
-
-  // ==============================
-  // SAVE DATA FOR RECOVERY PLAN
-  // ==============================
-
-  businessData = {
-    leads,
-    dealValue,
-    responseTime,
-    followUpRate,
-    riskScore,
-    riskLevel,
-    missedFollowUps,
-    lowEstimate,
-    highEstimate,
-    recoveryLow,
-    recoveryHigh
-  };
-
-  // ==============================
-  // UPDATE RESULT
-  // ==============================
-
-  document.getElementById("riskLevel").textContent =
-    riskLevel;
-
-  document.getElementById("riskScore").textContent =
-    riskScore;
-
-  document.getElementById("leakAmount").textContent =
-    `${formatCurrency(lowEstimate)} – ${formatCurrency(highEstimate)}`;
-
-  document.getElementById("recommendationText").textContent =
-    recommendation;
-
-  const leaksList =
-    document.getElementById("leaksList");
-
-  leaksList.innerHTML = "";
-
-  leaks.slice(0, 4).forEach((leak) => {
-    const item = document.createElement("div");
-
-    item.className = "leak-item";
-    item.textContent = leak;
-
-    leaksList.appendChild(item);
-  });
-
-  result.classList.remove("hidden");
-
-  setTimeout(() => {
-    result.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  }, 100);
-});
-
-
-// ==========================================
-// GENERATE RECOVERY PLAN — V2
-// ==========================================
-
-function generateRecoveryPlan() {
-
-  if (!businessData) {
-    alert("Please run the Revenue Scan first.");
-    return;
-  }
-
-  const data = businessData;
-
-  const formatCurrency = (amount) => {
-    return "$" + amount.toLocaleString("en-US");
-  };
-
-  let priorityOne = "";
-  let priorityTwo = "";
-  let priorityThree = "";
-
-  // Priority #1
-  if (data.responseTime > 6) {
-    priorityOne =
-      "Reduce lead response time. Prioritize new inquiries and high-intent prospects immediately.";
-  } else if (data.followUpRate < 60) {
-    priorityOne =
-      "Recover missed follow-ups. Re-engage older leads that have not received a recent response.";
-  } else {
-    priorityOne =
-      "Prioritize high-value leads using deal size and engagement signals.";
-  }
-
-  // Priority #2
-  if (data.followUpRate < 80) {
-    priorityTwo =
-      "Create a structured 7-day follow-up sequence for leads that do not respond.";
-  } else {
-    priorityTwo =
-      "Create automated reminders for sales representatives before opportunities go cold.";
-  }
-
-  // Priority #3
-  if (data.leads >= 500) {
-    priorityThree =
-      "Automate lead prioritization so your sales team focuses on the highest-value opportunities first.";
-  } else {
-    priorityThree =
-      "Track every lead's next action, last contact and opportunity value in one dashboard.";
-  }
-
-  // ==========================================
-  // CREATE RECOVERY PLAN
-  // ==========================================
-
-  const recoveryHTML = `
-    <div id="recoveryPlan" class="recovery-plan">
-
-      <div class="recovery-header">
-
-        <div>
-          <div class="result-label">
-            AI RECOVERY PLAN
-          </div>
-
-          <h2>
-            Your Revenue Recovery Roadmap
-          </h2>
-
-          <p>
-            Based on the business information you entered,
-            here are the highest-priority actions to reduce
-            revenue leakage.
-          </p>
-        </div>
-
-        <div class="recovery-badge">
-          ${data.riskLevel} RISK
-        </div>
-
-      </div>
-
-
-      <div class="recovery-metrics">
-
-        <div class="recovery-metric">
-          <span>Leads / Month</span>
-          <strong>
-            ${data.leads.toLocaleString("en-US")}
-          </strong>
-        </div>
 
-        <div class="recovery-metric">
-          <span>Missed Follow-ups</span>
-          <strong>
-            ${data.missedFollowUps.toLocaleString("en-US")}
-          </strong>
-        </div>
+  /* =========================
+     SCAN BUSINESS
+  ========================= */
 
-        <div class="recovery-metric">
-          <span>Potential Recovery</span>
-          <strong>
-            ${formatCurrency(data.recoveryLow)}
-            – ${formatCurrency(data.recoveryHigh)}
-          </strong>
-        </div>
+  scannerForm.addEventListener("submit", function (event) {
 
-      </div>
+    event.preventDefault();
 
+    const leads =
+      Number(document.getElementById("leads").value);
 
-      <div class="priority-list">
+    const responseRate =
+      Number(document.getElementById("response").value);
 
-        <div class="priority-item">
+    const conversionRate =
+      Number(document.getElementById("conversion").value);
 
-          <div class="priority-number">
-            01
-          </div>
+    const dealValue =
+      Number(document.getElementById("dealValue").value);
 
-          <div>
-            <h3>
-              Fix the Biggest Leak
-            </h3>
 
-            <p>
-              ${priorityOne}
-            </p>
-          </div>
+    /* Validation */
 
-        </div>
+    if (
+      leads <= 0 ||
+      dealValue <= 0 ||
+      responseRate < 0 ||
+      responseRate > 100 ||
+      conversionRate < 0 ||
+      conversionRate > 100
+    ) {
 
+      alert("Please enter valid business numbers.");
 
-        <div class="priority-item">
+      return;
+    }
 
-          <div class="priority-number">
-            02
-          </div>
 
-          <div>
-            <h3>
-              Build the Follow-up Engine
-            </h3>
+    /*
+      LEAK CALCULATION
 
-            <p>
-              ${priorityTwo}
-            </p>
-          </div>
+      Example:
 
-        </div>
+      100 leads
+      60% response
+      10% conversion
+      $1000 deal
 
+      Current responding leads = 60
+      Current deals = 6
 
-        <div class="priority-item">
+      Missed leads = 40
 
-          <div class="priority-number">
-            03
-          </div>
+      Potential recovered leads =
+      40 × 50% recovery assumption
 
-          <div>
-            <h3>
-              Prioritize Revenue
-            </h3>
+      Potential deals =
+      recovered leads × conversion rate
 
-            <p>
-              ${priorityThree}
-            </p>
-          </div>
+      Revenue opportunity =
+      potential deals × deal value
+    */
 
-        </div>
 
-      </div>
+    const respondingLeads =
+      leads * (responseRate / 100);
 
 
-      <div class="recovery-workflow">
+    const missed =
+      leads - respondingLeads;
 
-        <div class="workflow-title">
-          RECOMMENDED WORKFLOW
-        </div>
 
-        <div class="workflow">
+    const current =
+      respondingLeads * (conversionRate / 100);
 
-          <span>Lead</span>
 
-          <b>→</b>
+    /*
+      We estimate that an improved
+      follow-up system can recover
+      around 50% of currently missed leads.
+    */
 
-          <span>AI Score</span>
+    const recoverableLeads =
+      missed * 0.50;
 
-          <b>→</b>
 
-          <span>Priority</span>
+    const additionalDeals =
+      recoverableLeads * (conversionRate / 100);
 
-          <b>→</b>
 
-          <span>Follow-up</span>
+    const revenueOpportunity =
+      additionalDeals * dealValue;
 
-          <b>→</b>
 
-          <span>Appointment</span>
+    /* =========================
+       DISPLAY RESULTS
+    ========================= */
 
-        </div>
+    missedLeads.textContent =
+      Math.round(missed).toLocaleString("en-US");
 
-      </div>
 
+    currentDeals.textContent =
+      Math.round(current).toLocaleString("en-US");
 
-      <div class="recovery-cta">
 
-        <h3>
-          Ready to recover more of your existing opportunities?
-        </h3>
+    potentialDeals.textContent =
+      Math.round(additionalDeals).toLocaleString("en-US");
 
-        <p>
-          Connect your lead sources and turn this recovery plan
-          into an automated workflow.
-        </p>
 
-        <button
-          onclick="requestAutomationDemo()"
-          class="automation-btn"
-        >
-          Build My Recovery System →
-        </button>
+    lostRevenue.textContent =
+      formatMoney(revenueOpportunity);
 
-      </div>
 
-    </div>
-  `;
+    recoveryText.textContent =
+      "Your business may have approximately $" +
+      formatMoney(revenueOpportunity) +
+      " in monthly recoverable revenue opportunity.";
 
-  // Remove old plan
-  const oldPlan =
-    document.getElementById("recoveryPlan");
 
-  if (oldPlan) {
-    oldPlan.remove();
-  }
+    results.style.display = "block";
 
-  // Add new plan after scanner result
-  result.insertAdjacentHTML(
-    "afterend",
-    recoveryHTML
-  );
 
-  // Scroll to plan
-  setTimeout(() => {
+    recoveryPlan.style.display = "none";
 
-    document
-      .getElementById("recoveryPlan")
-      .scrollIntoView({
+
+    /* Scroll to results */
+
+    setTimeout(function () {
+
+      results.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
 
-  }, 150);
-}
+    }, 200);
+
+  });
 
 
-// ==========================================
-// AUTOMATION CTA
-// ==========================================
+  /* =========================
+     GENERATE RECOVERY PLAN
+  ========================= */
 
-function requestAutomationDemo() {
+  recoveryBtn.addEventListener("click", function () {
 
-  const message =
-    "Hi, I just completed the Revenue Leak Scanner. " +
-    "I'd like to discuss building a customized lead recovery system for my business.";
+    const leads =
+      Number(document.getElementById("leads").value);
 
-  const whatsappURL =
-    "https://wa.me/?text=" +
-    encodeURIComponent(message);
+    const responseRate =
+      Number(document.getElementById("response").value);
 
-  window.open(
-    whatsappURL,
-    "_blank"
-  );
-                                     }
+    const conversionRate =
+      Number(document.getElementById("conversion").value);
+
+    const dealValue =
+      Number(document.getElementById("dealValue").value);
+
+
+    const missed =
+      leads * (1 - responseRate / 100);
+
+
+    const recoverable =
+      missed * 0.50;
+
+
+    const additionalDeals =
+      recoverable * (conversionRate / 100);
+
+
+    const revenue =
+      additionalDeals * dealValue;
+
+
+    let priority = "Medium";
+
+
+    if (responseRate < 50) {
+
+      priority = "HIGH";
+
+    } else if (responseRate < 75) {
+
+      priority = "MEDIUM";
+
+    } else {
+
+      priority = "LOW";
+
+    }
+
+
+    /* =========================
+       RECOVERY PLAN HTML
+    ========================= */
+
+    planContent.innerHTML = `
+
+      <ul>
+
+        <li>
+          <strong>Priority Level:</strong>
+          ${priority}
+        </li>
+
+        <li>
+          <strong>Lead Response:</strong>
+          Contact new leads as quickly as possible,
+          ideally within 5 minutes.
+        </li>
+
+        <li>
+          <strong>Missed Lead Recovery:</strong>
+          Create an automatic follow-up sequence
+          for approximately ${Math.round(missed)} missed leads.
+        </li>
+
+        <li>
+          <strong>Follow-up System:</strong>
+          Use multiple follow-ups instead of relying
+          on a single contact attempt.
+        </li>
+
+        <li>
+          <strong>Revenue Opportunity:</strong>
+          Potential additional revenue is approximately
+          $${formatMoney(revenue)} per month.
+        </li>
+
+        <li>
+          <strong>Automation Opportunity:</strong>
+          Connect your lead forms, CRM, email and
+          messaging workflow so no new lead is forgotten.
+        </li>
+
+      </ul>
+
+    `;
+
+
+    recoveryPlan.style.display = "block";
+
+
+    recoveryPlan.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  });
+
+
+  /* =========================
+     RESET SCANNER
+  ========================= */
+
+  resetBtn.addEventListener("click", function () {
+
+    scannerForm.reset();
+
+    results.style.display = "none";
+
+    recoveryPlan.style.display = "none";
+
+    lostRevenue.textContent = "0";
+
+    missedLeads.textContent = "0";
+
+    potentialDeals.textContent = "0";
+
+    currentDeals.textContent = "0";
+
+    window.scrollTo({
+      top: document.getElementById("scanner").offsetTop - 80,
+      behavior: "smooth"
+    });
+
+  });
+
+
+  /* =========================
+     SMOOTH SCROLL
+  ========================= */
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+
+    link.addEventListener("click", function (event) {
+
+      const targetId =
+        this.getAttribute("href");
+
+      const target =
+        document.querySelector(targetId);
+
+      if (target) {
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth"
+        });
+
+      }
+
+    });
+
+  });
+
+});
