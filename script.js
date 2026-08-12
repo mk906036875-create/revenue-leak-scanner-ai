@@ -1,4 +1,4 @@
- document.addEventListener("DOMContentLoaded", () => {
+ document.addEventListener("DOMContentLoaded", function () {
 
   const form = document.getElementById("scannerForm");
   const results = document.getElementById("results");
@@ -15,148 +15,118 @@
   const recoveryText = document.getElementById("recoveryText");
   const resetBtn = document.getElementById("resetBtn");
 
-  let scanData = null;
 
-
-  /* =========================
-     HELPERS
-  ========================= */
-
-  function money(value) {
-    return Math.round(value).toLocaleString("en-US");
-  }
-
-  function number(value) {
-    return Math.round(value).toLocaleString("en-US");
-  }
-
-
-  /* =========================
-     SCAN
-  ========================= */
-
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", function (e) {
 
     e.preventDefault();
 
-    const leads = Number(
-      document.getElementById("leads").value
-    );
+    const leads = Number(document.getElementById("leads").value);
+    const response = Number(document.getElementById("response").value);
+    const conversion = Number(document.getElementById("conversion").value);
+    const dealValue = Number(document.getElementById("dealValue").value);
 
-    const responseRate = Number(
-      document.getElementById("response").value
-    );
-
-    const conversionRate = Number(
-      document.getElementById("conversion").value
-    );
-
-    const dealValue = Number(
-      document.getElementById("dealValue").value
-    );
-
-
-    if (
-      leads <= 0 ||
-      dealValue <= 0 ||
-      responseRate < 0 ||
-      responseRate > 100 ||
-      conversionRate < 0 ||
-      conversionRate > 100
-    ) {
-      alert("Please enter valid business numbers.");
+    if (!leads || !dealValue) {
+      alert("Please enter all values.");
       return;
     }
 
+    const respondingLeads = leads * (response / 100);
 
-    /* Current performance */
+    const missed = leads - respondingLeads;
 
-    const respondingLeads =
-      leads * responseRate / 100;
+    const current = respondingLeads * (conversion / 100);
 
-    const missed =
-      leads - respondingLeads;
+    const recoverable = missed * 0.50;
 
-    const current =
-      respondingLeads * conversionRate / 100;
+    const extraDeals = recoverable * (conversion / 100);
 
-
-    /*
-      Demo recovery assumption:
-      50% of missed leads can potentially
-      be recovered with better follow-up.
-    */
-
-    const recoverableLeads =
-      missed * 0.50;
-
-    const additionalDeals =
-      recoverableLeads * conversionRate / 100;
-
-    const revenueOpportunity =
-      additionalDeals * dealValue;
+    const revenue = extraDeals * dealValue;
 
 
-    /* =========================
-       LEAK SCORE
-    ========================= */
+    missedLeads.textContent = Math.round(missed);
 
-    let score =
-      Math.round(
-        (100 - responseRate) * 0.6 +
-        Math.min(conversionRate, 20) * 2
-      );
+    currentDeals.textContent = Math.round(current);
 
-    score = Math.max(0, Math.min(100, score));
-
-
-    let risk;
-    let riskIcon;
-
-    if (score >= 60) {
-      risk = "HIGH RISK";
-      riskIcon = "🔴";
-    } else if (score >= 30) {
-      risk = "MEDIUM RISK";
-      riskIcon = "🟡";
-    } else {
-      risk = "LOW RISK";
-      riskIcon = "🟢";
-    }
-
-
-    /* =========================
-       SAVE DATA
-    ========================= */
-
-    scanData = {
-      leads,
-      responseRate,
-      conversionRate,
-      dealValue,
-      missed,
-      current,
-      additionalDeals,
-      revenueOpportunity,
-      score,
-      risk
-    };
-
-
-    /* =========================
-       DISPLAY
-    ========================= */
-
-    missedLeads.textContent = number(missed);
-
-    currentDeals.textContent = number(current);
-
-    potentialDeals.textContent =
-      number(additionalDeals);
+    potentialDeals.textContent = Math.round(extraDeals);
 
     lostRevenue.textContent =
-      money(revenueOpportunity);
+      Math.round(revenue).toLocaleString("en-US");
 
 
-    recoveryText.innerHTML = `
-      Your estimated monthly recovery
+    recoveryText.innerHTML =
+      "Estimated recoverable revenue: <strong>$" +
+      Math.round(revenue).toLocaleString("en-US") +
+      "</strong> per month.";
+
+
+    results.style.display = "block";
+
+    recoveryPlan.style.display = "none";
+
+    results.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  });
+
+
+  recoveryBtn.addEventListener("click", function () {
+
+    planContent.innerHTML = `
+
+      <ul>
+
+        <li>
+          Respond to new leads faster.
+        </li>
+
+        <li>
+          Automatically follow up with missed leads.
+        </li>
+
+        <li>
+          Prioritize high-value prospects.
+        </li>
+
+        <li>
+          Create a multi-step follow-up sequence.
+        </li>
+
+        <li>
+          Track every lead inside your CRM.
+        </li>
+
+      </ul>
+
+      <p style="margin-top:20px;">
+        🚀 Recommended action:
+        automate your lead response and follow-up process.
+      </p>
+
+    `;
+
+    recoveryPlan.style.display = "block";
+
+    recoveryPlan.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  });
+
+
+  resetBtn.addEventListener("click", function () {
+
+    form.reset();
+
+    results.style.display = "none";
+
+    recoveryPlan.style.display = "none";
+
+    window.scrollTo({
+      top: document.getElementById("scanner").offsetTop,
+      behavior: "smooth"
+    });
+
+  });
+
+});
