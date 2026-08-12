@@ -1,4 +1,4 @@
- document.addEventListener("DOMContentLoaded", function () {
+ document.addEventListener("DOMContentLoaded", () => {
 
   const form = document.getElementById("scannerForm");
   const results = document.getElementById("results");
@@ -16,103 +16,187 @@
   const resetBtn = document.getElementById("resetBtn");
 
 
-  form.addEventListener("submit", function (e) {
+  // =========================
+  // REVENUE SCAN
+  // =========================
 
-    e.preventDefault();
+  form.addEventListener("submit", function (event) {
 
-    const leads = Number(document.getElementById("leads").value);
-    const response = Number(document.getElementById("response").value);
-    const conversion = Number(document.getElementById("conversion").value);
-    const dealValue = Number(document.getElementById("dealValue").value);
+    event.preventDefault();
 
-    if (!leads || !dealValue) {
-      alert("Please enter all values.");
+    const leads = parseFloat(document.getElementById("leads").value);
+    const response = parseFloat(document.getElementById("response").value);
+    const conversion = parseFloat(document.getElementById("conversion").value);
+    const dealValue = parseFloat(document.getElementById("dealValue").value);
+
+
+    // Validation
+    if (
+      isNaN(leads) ||
+      isNaN(response) ||
+      isNaN(conversion) ||
+      isNaN(dealValue)
+    ) {
+      alert("Please enter all business numbers.");
       return;
     }
 
-    const respondingLeads = leads * (response / 100);
+    if (leads <= 0 || dealValue <= 0) {
+      alert("Leads and deal value must be greater than 0.");
+      return;
+    }
 
-    const missed = leads - respondingLeads;
+    if (response < 0 || response > 100) {
+      alert("Response rate must be between 0% and 100%.");
+      return;
+    }
 
-    const current = respondingLeads * (conversion / 100);
-
-    const recoverable = missed * 0.50;
-
-    const extraDeals = recoverable * (conversion / 100);
-
-    const revenue = extraDeals * dealValue;
+    if (conversion < 0 || conversion > 100) {
+      alert("Conversion rate must be between 0% and 100%.");
+      return;
+    }
 
 
-    missedLeads.textContent = Math.round(missed);
+    // =========================
+    // CALCULATIONS
+    // =========================
 
-    currentDeals.textContent = Math.round(current);
+    const respondingLeads =
+      leads * (response / 100);
 
-    potentialDeals.textContent = Math.round(extraDeals);
+    const missed =
+      Math.max(0, leads - respondingLeads);
+
+    const current =
+      respondingLeads * (conversion / 100);
+
+    // Assume 50% of missed leads can potentially be recovered
+    const recoverableLeads =
+      missed * 0.50;
+
+    const extraDeals =
+      recoverableLeads * (conversion / 100);
+
+    const revenue =
+      extraDeals * dealValue;
+
+
+    // =========================
+    // SHOW RESULTS
+    // =========================
+
+    missedLeads.textContent =
+      Math.round(missed).toLocaleString("en-US");
+
+    currentDeals.textContent =
+      Math.round(current).toLocaleString("en-US");
+
+    potentialDeals.textContent =
+      Math.round(extraDeals).toLocaleString("en-US");
 
     lostRevenue.textContent =
       Math.round(revenue).toLocaleString("en-US");
 
 
     recoveryText.innerHTML =
-      "Estimated recoverable revenue: <strong>$" +
-      Math.round(revenue).toLocaleString("en-US") +
-      "</strong> per month.";
+      `Estimated recoverable revenue:
+      <strong>$${Math.round(revenue).toLocaleString("en-US")}</strong>
+      per month.`;
 
 
+    // Show result section
     results.style.display = "block";
 
+    // Hide previous recovery plan
     recoveryPlan.style.display = "none";
 
-    results.scrollIntoView({
-      behavior: "smooth"
-    });
+    planContent.innerHTML = "";
+
+
+    // Scroll to results
+    setTimeout(() => {
+      results.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 100);
 
   });
 
+
+  // =========================
+  // GENERATE RECOVERY PLAN
+  // =========================
 
   recoveryBtn.addEventListener("click", function () {
 
     planContent.innerHTML = `
 
-      <ul>
+      <div class="plan-item">
+        <strong>1. ⚡ Speed Up Lead Response</strong>
+        <p>
+          Respond to new leads as quickly as possible,
+          especially during the first few minutes.
+        </p>
+      </div>
 
-        <li>
-          Respond to new leads faster.
-        </li>
+      <div class="plan-item">
+        <strong>2. 🔁 Automate Follow-ups</strong>
+        <p>
+          Create automated follow-up messages for leads
+          who did not respond to the first contact.
+        </p>
+      </div>
 
-        <li>
-          Automatically follow up with missed leads.
-        </li>
+      <div class="plan-item">
+        <strong>3. 🎯 Prioritize Hot Leads</strong>
+        <p>
+          Focus your sales team on prospects with the
+          highest buying intent and deal value.
+        </p>
+      </div>
 
-        <li>
-          Prioritize high-value prospects.
-        </li>
+      <div class="plan-item">
+        <strong>4. 📅 Build a Follow-up Sequence</strong>
+        <p>
+          Use multiple follow-up steps instead of
+          contacting a prospect only once.
+        </p>
+      </div>
 
-        <li>
-          Create a multi-step follow-up sequence.
-        </li>
+      <div class="plan-item">
+        <strong>5. 📊 Track Every Lead</strong>
+        <p>
+          Monitor lead status, response time,
+          follow-ups and conversion inside your CRM.
+        </p>
+      </div>
 
-        <li>
-          Track every lead inside your CRM.
-        </li>
-
-      </ul>
-
-      <p style="margin-top:20px;">
-        🚀 Recommended action:
-        automate your lead response and follow-up process.
-      </p>
+      <div class="plan-recommendation">
+        🚀 <strong>Recommended Action:</strong><br>
+        Automate lead response and follow-up to
+        recover more opportunities from your existing
+        lead database.
+      </div>
 
     `;
 
     recoveryPlan.style.display = "block";
 
-    recoveryPlan.scrollIntoView({
-      behavior: "smooth"
-    });
+
+    setTimeout(() => {
+      recoveryPlan.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }, 100);
 
   });
 
+
+  // =========================
+  // RESET SCANNER
+  // =========================
 
   resetBtn.addEventListener("click", function () {
 
@@ -121,6 +205,8 @@
     results.style.display = "none";
 
     recoveryPlan.style.display = "none";
+
+    planContent.innerHTML = "";
 
     window.scrollTo({
       top: document.getElementById("scanner").offsetTop,
