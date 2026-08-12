@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -28,7 +28,6 @@
 
   <!-- Hero -->
   <section class="hero">
-
     <div class="hero-content">
 
       <div class="badge">
@@ -60,7 +59,6 @@
       </div>
 
     </div>
-
   </section>
 
 
@@ -92,5 +90,339 @@
         <h3>Slow Response</h3>
         <p>
           Leads lose interest while your team
-         
-<script src="script.js"></script>
+          takes too long to respond.
+        </p>
+      </div>
+
+      <div class="problem-card">
+        <div class="icon">🔁</div>
+        <h3>Missed Follow-ups</h3>
+        <p>
+          Valuable prospects disappear because
+          follow-ups are inconsistent.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Scanner -->
+  <section class="scanner-section" id="scanner">
+
+    <div class="section-title">
+
+      <div class="small-label">
+        FREE REVENUE SCAN
+      </div>
+
+      <h2>
+        Calculate Your Potential Revenue Leak
+      </h2>
+
+      <p>
+        Enter a few business numbers to estimate
+        how much revenue may be slipping away.
+      </p>
+
+    </div>
+
+
+    <div class="scanner-card">
+
+      <form id="scannerForm">
+
+        <div class="input-group">
+          <label for="leads">
+            Monthly Leads
+          </label>
+
+          <input
+            type="number"
+            id="leads"
+            placeholder="e.g. 100"
+            min="1"
+            required
+          >
+        </div>
+
+
+        <div class="input-group">
+          <label for="response">
+            Average Response Rate (%)
+          </label>
+
+          <input
+            type="number"
+            id="response"
+            placeholder="e.g. 60"
+            min="0"
+            max="100"
+            required
+          >
+        </div>
+
+
+        <div class="input-group">
+          <label for="conversion">
+            Current Conversion Rate (%)
+          </label>
+
+          <input
+            type="number"
+            id="conversion"
+            placeholder="e.g. 10"
+            min="0"
+            max="100"
+            required
+          >
+        </div>
+
+
+        <div class="input-group">
+          <label for="dealValue">
+            Average Deal Value ($)
+          </label>
+
+          <input
+            type="number"
+            id="dealValue"
+            placeholder="e.g. 1000"
+            min="1"
+            required
+          >
+        </div>
+
+
+        <button
+          type="submit"
+          class="scan-btn"
+          id="scanButton"
+        >
+          🔍 Scan Revenue Leak
+        </button>
+
+      </form>
+
+
+      <!-- Results -->
+      <div
+        id="results"
+        class="results"
+        style="display:none;"
+      >
+
+        <div class="result-header">
+          <div class="small-label">
+            SCAN COMPLETE
+          </div>
+
+          <h2>
+            Your Estimated Revenue Leak
+          </h2>
+        </div>
+
+
+        <div class="revenue-number">
+          $<span id="lostRevenue">0</span>
+        </div>
+
+
+        <p class="result-description">
+          Estimated monthly revenue opportunity based
+          on your current lead response and conversion performance.
+        </p>
+
+
+        <div class="metrics">
+
+          <div class="metric">
+            <strong id="missedLeads">0</strong>
+            <span>Missed Leads</span>
+          </div>
+
+          <div class="metric">
+            <strong id="potentialDeals">0</strong>
+            <span>Potential Deals</span>
+          </div>
+
+          <div class="metric">
+            <strong id="currentDeals">0</strong>
+            <span>Current Deals</span>
+          </div>
+
+        </div>
+
+
+        <!-- Recovery Plan -->
+        <div class="recovery-box">
+
+          <h3>
+            🚀 AI Recovery Opportunity
+          </h3>
+
+          <p id="recoveryText">
+            Your recovery plan will appear here.
+          </p>
+
+          <button
+            type="button"
+            class="recovery-btn"
+            id="recoveryBtn"
+          >
+            Generate Recovery Plan →
+          </button>
+
+        </div>
+
+
+        <!-- Recovery Plan Output -->
+        <div
+          id="recoveryPlan"
+          class="recovery-plan"
+          style="display:none;"
+        >
+
+          <h3>
+            ⚡ Your Recovery Plan
+          </h3>
+
+          <div id="planContent"></div>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="reset-btn"
+          id="resetBtn"
+        >
+          ← Run Another Scan
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- How It Works -->
+  <section
+    class="how-section"
+    id="how-it-works"
+  >
+
+    <div class="section-title">
+
+      <div class="small-label">
+        HOW IT WORKS
+      </div>
+
+      <h2>
+        From Lost Leads To Recoverable Revenue
+      </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-number">01</div>
+
+        <h3>
+          Enter Your Numbers
+        </h3>
+
+        <p>
+          Add your monthly leads, response rate,
+          conversion rate and average deal value.
+        </p>
+      </div>
+
+
+      <div class="step">
+        <div class="step-number">02</div>
+
+        <h3>
+          Find Your Leak
+        </h3>
+
+        <p>
+          The scanner estimates the revenue
+          opportunity hidden inside your lead flow.
+        </p>
+      </div>
+
+
+      <div class="step">
+        <div class="step-number">03</div>
+
+        <h3>
+          Recover Revenue
+        </h3>
+
+        <p>
+          Generate a practical recovery plan
+          focused on response and follow-up.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="final-cta">
+
+    <div class="cta-content">
+
+      <div class="badge">
+        STOP LOSING REVENUE
+      </div>
+
+      <h2>
+        Your next customer
+        may already be in your database.
+      </h2>
+
+      <p>
+        Find the leak. Fix the follow-up.
+        Recover the revenue.
+      </p>
+
+      <a
+        href="#scanner"
+        class="primary-btn"
+      >
+        Run Your Free Scan →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+
+    <div class="logo">
+      ⚡ Revenue<span>Leak</span>
+    </div>
+
+    <p>
+      AI-powered revenue intelligence for modern businesses.
+    </p>
+
+    <p>
+      © 2026 Revenue Leak Scanner AI
+    </p>
+
+  </footer>
+
+
+  <!-- JavaScript -->
+  <script src="
